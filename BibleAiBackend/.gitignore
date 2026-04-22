@@ -1,0 +1,27 @@
+# .NET Core
+[Bb]in/
+[Oo]bj/
+[Tt]estResults/
+[Pp]ublish/
+
+# Visual Studio / VS Code
+.vs/
+.vscode/
+*.user
+*.userosscache
+*.sln.docuser
+*.suo
+*.user
+*.userosscache
+*.sln.docuser
+
+# Build results
+[Bb]in/
+[Oo]bj/
+
+# Others
+.DS_Store
+Thumbs.db
+*.log
+__pycache__/
+.env
