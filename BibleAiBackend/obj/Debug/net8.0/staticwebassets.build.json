@@ -1,0 +1,11 @@
+{
+  "Version": 1,
+  "Hash": "04JNXxqynAECKOeHqxA671QtqoV/4coMI/ZTEqgzQpM=",
+  "Source": "BibleAiBackend",
+  "BasePath": "_content/BibleAiBackend",
+  "Mode": "Default",
+  "ManifestType": "Build",
+  "ReferencedProjectsConfiguration": [],
+  "DiscoveryPatterns": [],
+  "Assets": []
+}
