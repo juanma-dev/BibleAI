@@ -39,6 +39,8 @@ dependencies:
 
   # Utils
   share_plus: ^10.1.4
+  sqlite3_flutter_libs: ^0.6.0+eol
+  flutter_secure_storage: ^10.0.0
 
 dev_dependencies:
   flutter_test:

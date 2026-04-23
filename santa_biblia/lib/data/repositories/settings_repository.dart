@@ -1,13 +1,16 @@
 import 'dart:io' show Platform;
 import 'package:flutter/foundation.dart' show kIsWeb;
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../models/bible_models.dart';
 import '../../core/constants/app_constants.dart';
 
 class SettingsRepository {
   final SharedPreferences _prefs;
+  final FlutterSecureStorage _secureStorage;
+  final String _initialApiKey;
 
-  SettingsRepository(this._prefs);
+  SettingsRepository(this._prefs, this._secureStorage, this._initialApiKey);
 
   AppSettings load() => AppSettings(
     themeMode: _loadThemeMode(),
@@ -15,7 +18,7 @@ class SettingsRepository {
     bibleVersion: _prefs.getString(AppConstants.prefBibleVersion) ?? AppConstants.defaultVersion,
     fontSize: _prefs.getDouble(AppConstants.prefFontSize) ?? AppConstants.defaultFontSize,
     aiProvider: _loadAiProvider(),
-    aiApiKey: _prefs.getString(AppConstants.prefAiApiKey) ?? '',
+    aiApiKey: _initialApiKey,
     backendUrl: _loadBackendUrl(),
   );
 
@@ -38,7 +41,7 @@ class SettingsRepository {
     await _prefs.setString(AppConstants.prefBibleVersion, settings.bibleVersion);
     await _prefs.setDouble(AppConstants.prefFontSize, settings.fontSize);
     await _prefs.setString(AppConstants.prefAiProvider, settings.aiProvider.id);
-    await _prefs.setString(AppConstants.prefAiApiKey, settings.aiApiKey);
+    await _secureStorage.write(key: AppConstants.prefAiApiKey, value: settings.aiApiKey);
     await _prefs.setString(AppConstants.prefBackendUrl, settings.backendUrl);
   }
 

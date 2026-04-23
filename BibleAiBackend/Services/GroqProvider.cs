@@ -28,7 +28,7 @@ public class GroqProvider(IHttpClientFactory httpFactory) : IAiProvider
 
         var payload = new
         {
-            model = "gemma2-9b-it",
+            model = "llama-3.3-70b-versatile",
             messages,
             max_tokens = 1024,
             temperature = 0.3

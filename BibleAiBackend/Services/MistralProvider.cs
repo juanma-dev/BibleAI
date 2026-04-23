@@ -25,7 +25,7 @@ public class MistralProvider(IHttpClientFactory httpFactory) : IAiProvider
 
         var payload = new
         {
-            model = "mistral-small-latest",
+            model = "mistral-small-4",
             messages,
             max_tokens = 1024,
             temperature = 0.3

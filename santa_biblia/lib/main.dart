@@ -4,7 +4,9 @@ import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import 'package:sqflite_common_ffi/sqflite_ffi.dart';
+import 'core/constants/app_constants.dart';
 import 'core/router/app_router.dart';
 import 'core/theme/app_theme.dart';
 import 'features/settings/providers/settings_provider.dart';
@@ -27,11 +29,22 @@ void main() async {
   }
 
   final prefs = await SharedPreferences.getInstance();
+  const secureStorage = FlutterSecureStorage();
+  
+  // Read initial API key securely
+  String initialApiKey = '';
+  try {
+    initialApiKey = await secureStorage.read(key: AppConstants.prefAiApiKey) ?? '';
+  } catch (e) {
+    debugPrint('Error reading secure storage: $e');
+  }
 
   runApp(
     ProviderScope(
       overrides: [
         sharedPreferencesProvider.overrideWithValue(prefs),
+        secureStorageProvider.overrideWithValue(secureStorage),
+        initialApiKeyProvider.overrideWithValue(initialApiKey),
       ],
       child: const SantaBibliaApp(),
     ),

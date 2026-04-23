@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:shared_preferences/shared_preferences.dart';
+import 'package:flutter_secure_storage/flutter_secure_storage.dart';
 import '../../../data/models/bible_models.dart';
 import '../../../data/repositories/settings_repository.dart';
 
@@ -8,9 +9,19 @@ final sharedPreferencesProvider = Provider<SharedPreferences>((ref) {
   throw UnimplementedError('Initialize in main.dart');
 });
 
+final secureStorageProvider = Provider<FlutterSecureStorage>((ref) {
+  throw UnimplementedError('Initialize in main.dart');
+});
+
+final initialApiKeyProvider = Provider<String>((ref) {
+  throw UnimplementedError('Initialize in main.dart');
+});
+
 final settingsRepositoryProvider = Provider<SettingsRepository>((ref) {
   final prefs = ref.watch(sharedPreferencesProvider);
-  return SettingsRepository(prefs);
+  final storage = ref.watch(secureStorageProvider);
+  final initialApiKey = ref.watch(initialApiKeyProvider);
+  return SettingsRepository(prefs, storage, initialApiKey);
 });
 
 class SettingsNotifier extends Notifier<AppSettings> {

@@ -15,7 +15,7 @@ public class GeminiProvider(IHttpClientFactory httpFactory) : IAiProvider
         CancellationToken ct = default)
     {
         var client = httpFactory.CreateClient();
-        var model = "gemini-2.0-flash";
+        var model = "gemini-2.5-flash";
         var url = $"https://generativelanguage.googleapis.com/v1beta/models/{model}:generateContent?key={apiKey}";
 
         var contents = new List<object>();

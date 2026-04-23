@@ -265,6 +265,7 @@ class _ChapterPageState extends ConsumerState<_ChapterPage> {
       );
       if (mounted) setState(() { _verses = verses; _loading = false; });
     } catch (e) {
+      debugPrint('ERROR AL CARGAR VERSICULOS: $e');
       if (mounted) setState(() { _loading = false; _error = e.toString(); });
     }
   }
@@ -313,8 +314,8 @@ class _ChapterPageState extends ConsumerState<_ChapterPage> {
                 const SizedBox(height: 8),
                 Text(
                   settings.language == 'es'
-                      ? 'Verifica tu conexión a internet e intenta de nuevo.'
-                      : 'Check your internet connection and try again.',
+                      ? 'Verifica tu conexión a internet e intenta de nuevo.\nError real: $_error'
+                      : 'Check your internet connection and try again.\nError: $_error',
                   style: theme.textTheme.bodySmall,
                   textAlign: TextAlign.center,
                 ),

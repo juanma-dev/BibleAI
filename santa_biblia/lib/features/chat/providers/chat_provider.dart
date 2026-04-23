@@ -80,7 +80,7 @@ class ChatNotifier extends StateNotifier<List<ChatMessage>> {
         ChatMessage(
           id: loadingMsg.id,
           role: 'assistant',
-          content: 'Error al conectar con el asistente. Verifica tu conexión y configuración.',
+          content: 'Error: $e',
           timestamp: DateTime.now(),
         ),
       ];
@@ -116,7 +116,16 @@ class ChatNotifier extends StateNotifier<List<ChatMessage>> {
       final data = json.decode(response.body) as Map<String, dynamic>;
       return data['response'] as String? ?? 'Sin respuesta';
     }
-    throw Exception('HTTP ${response.statusCode}');
+    
+    String errorMsg = 'HTTP ${response.statusCode}';
+    try {
+      final errorData = json.decode(response.body) as Map<String, dynamic>;
+      if (errorData.containsKey('detail')) {
+        errorMsg = errorData['detail'] as String;
+      }
+    } catch (_) {}
+    
+    throw Exception(errorMsg);
   }
 
   void sendVerseQuery(BibleVerse verse, String bookName, String language) {

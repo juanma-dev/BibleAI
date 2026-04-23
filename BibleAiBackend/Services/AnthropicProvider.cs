@@ -25,7 +25,7 @@ public class AnthropicProvider(IHttpClientFactory httpFactory) : IAiProvider
 
         var payload = new
         {
-            model = "claude-haiku-4-5-20251001",
+            model = "claude-4.7-opus-20260416",
             max_tokens = 1024,
             system = systemPrompt,
             messages,

@@ -30,7 +30,7 @@ public class OpenAiProvider(IHttpClientFactory httpFactory) : IAiProvider
 
         var payload = new
         {
-            model = "gpt-4o-mini",
+            model = "gpt-5.4-pro",
             messages,
             max_tokens = 1024,
             temperature = 0.3

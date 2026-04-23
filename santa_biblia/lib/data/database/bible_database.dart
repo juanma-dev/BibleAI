@@ -83,7 +83,7 @@ class BibleDatabase {
   /// Fallback: creates schema from scratch (used only when no bundled DB exists)
   Future<void> _createEmptySchema(Database db, int version) async {
     await db.execute('''
-      CREATE TABLE verses (
+      CREATE TABLE IF NOT EXISTS verses (
         id INTEGER PRIMARY KEY AUTOINCREMENT,
         version_id TEXT NOT NULL,
         book_id INTEGER NOT NULL,
@@ -92,16 +92,16 @@ class BibleDatabase {
         text TEXT NOT NULL
       )
     ''');
-    await db.execute('CREATE INDEX idx_verses_lookup ON verses(version_id, book_id, chapter)');
+    await db.execute('CREATE INDEX IF NOT EXISTS idx_verses_lookup ON verses(version_id, book_id, chapter)');
     await db.execute('''
-      CREATE VIRTUAL TABLE verses_fts USING fts5(
+      CREATE VIRTUAL TABLE IF NOT EXISTS verses_fts USING fts5(
         text, version_id UNINDEXED, book_id UNINDEXED,
         chapter UNINDEXED, verse_num UNINDEXED, row_id UNINDEXED,
         content='verses', content_rowid='id'
       )
     ''');
     await db.execute('''
-      CREATE TRIGGER verses_ai AFTER INSERT ON verses BEGIN
+      CREATE TRIGGER IF NOT EXISTS verses_ai AFTER INSERT ON verses BEGIN
         INSERT INTO verses_fts(rowid, text, version_id, book_id, chapter, verse_num, row_id)
         VALUES (new.id, new.text, new.version_id, new.book_id, new.chapter, new.verse, new.id);
       END

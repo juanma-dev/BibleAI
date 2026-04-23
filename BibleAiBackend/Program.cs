@@ -89,6 +89,11 @@ app.MapPost("/api/chat", async (
         }
     }
 
+    if (string.IsNullOrWhiteSpace(request.ApiKey) && request.Provider != "ollama")
+    {
+        return Results.BadRequest(new ErrorResponse("Bad Request", "Falta la API Key. Por favor, configúrala en la aplicación."));
+    }
+
     try
     {
         var response = await orchestrator.ProcessAsync(request, ct);
